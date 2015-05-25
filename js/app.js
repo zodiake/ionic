@@ -17,20 +17,18 @@ angular.module('starter', ['ionic']).run(function($ionicPlatform) {
 });
 
 angular.module('starter').config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/tabs/products");
+
     $stateProvider
-        .state('home', {
-            url: "/home",
-            templateUrl: "../home.html",
-            controller: 'homeController'
-        }).state('tabs', {
+        .state('tabs', {
             abstract: true,
             url: '/tabs',
-            templateUrl: "../tabs.html"
+            templateUrl: "templates/tabs.html"
         }).state('tabs.products', {
             url: '/products',
             views: {
                 'products-tab': {
-                    templateUrl: '../products.html',
+                    templateUrl: 'templates/products.html',
                     controller: 'productsController'
                 }
             }
@@ -38,18 +36,21 @@ angular.module('starter').config(function($stateProvider, $urlRouterProvider) {
             url: '/category',
             views: {
                 'category-tab': {
-                    templateUrl: '../category.html',
+                    templateUrl: 'templates/category.html',
                     controller: 'categoryController'
                 }
             }
+        }).state('tabs.productDetail', {
+            url: '/products/:id',
+            templateUrl: 'templates/productDetail.html',
+            controller: 'productDetailController'
         });
-
 });
 
 angular.module('starter').controller('homeController', ['$timeout', '$state', function($timeout, $state) {
     $timeout(function() {
         $state.go('tabs.products');
-    }, 1000);
+    }, 2000)
 }]);
 
 angular.module('starter').controller('productsController', ['$scope', function($scope) {

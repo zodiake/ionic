@@ -27,5 +27,18 @@
     <!--end header-->
     <ion-nav-view></ion-nav-view>
 </body>
+<script id="templates/products.html" type="text/ng-template">
+    <ion-view view-title='products'>
+        <ion-content>
+            <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+            </ion-refresher>
+            <ion-list>
+                <ion-item ng-repeat="product in products">
+                    Hello, {{item}}!
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-view>
+</script>
 
 </html>
