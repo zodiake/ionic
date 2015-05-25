@@ -1,5 +1,9 @@
-<ion-view view-title="Home">
-    <ion-content >
-        <a href="#/music">category</a>
+<ion-view view-title='products'>
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="category in categories">
+                Hello, {{category}}!
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>
