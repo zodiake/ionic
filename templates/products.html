@@ -1,14 +1,10 @@
-<ion-nav-bar align-title="center" class="bar-positive">
-    <ion-nav-back-button>
-    </ion-nav-back-button>
-</ion-nav-bar>
 <ion-view view-title='products'>
     <ion-content>
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
         </ion-refresher>
         <ion-list>
-            <ion-item ng-repeat="product in products">
-                Hello, {{item}}!
+            <ion-item ng-repeat="product in products" item="product" href="#/tabs/products/{{product.id}}">
+                {{product.id}}
             </ion-item>
         </ion-list>
     </ion-content>

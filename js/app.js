@@ -9,14 +9,15 @@ angular.module('starter', ['ionic']).run(function($ionicPlatform) {
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        }
+        };
         if (window.StatusBar) {
             StatusBar.styleDefault();
-        }
+        };
     });
 });
 
-angular.module('starter').config(function($stateProvider, $urlRouterProvider) {
+angular.module('starter').config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
+    $ionicConfigProvider.tabs.position('bottom');
     $urlRouterProvider.otherwise("/tabs/products");
 
     $stateProvider
@@ -29,7 +30,7 @@ angular.module('starter').config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'products-tab': {
                     templateUrl: 'templates/products.html',
-                    controller: 'productsController'
+                    controller: 'ProductsController'
                 }
             }
         }).state('tabs.category', {
@@ -37,23 +38,22 @@ angular.module('starter').config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'category-tab': {
                     templateUrl: 'templates/category.html',
-                    controller: 'categoryController'
+                    controller: 'CategoryController'
                 }
             }
         }).state('tabs.productDetail', {
             url: '/products/:id',
-            templateUrl: 'templates/productDetail.html',
-            controller: 'productDetailController'
+            views: {
+                'products-tab': {
+                    templateUrl: 'templates/productDetail.html',
+                    controller: 'ProductDetailController'
+                }
+            }
         });
 });
 
-angular.module('starter').controller('homeController', ['$timeout', '$state', function($timeout, $state) {
-    $timeout(function() {
-        $state.go('tabs.products');
-    }, 2000)
-}]);
 
-angular.module('starter').controller('productsController', ['$scope', function($scope) {
+angular.module('starter').controller('ProductsController', ['$scope', '$location', '$state', function($scope, $location, $state) {
     $scope.products = [{
         id: '1',
         name: 'product1'
@@ -77,10 +77,16 @@ angular.module('starter').controller('productsController', ['$scope', function($
 
     $scope.doRefresh = function() {
 
-    }
+    };
+
+    $scope.showDetail = function(product) {
+        $state.go('tabs.productDetail', {
+            id: product.id
+        });
+    };
 }]);
 
-angular.module('starter').controller('categoryController', ['$scope', function($scope) {
+angular.module('starter').controller('CategoryController', ['$scope', function($scope) {
     $scope.categories = [{
         id: '1',
         name: 'category1'
@@ -94,4 +100,11 @@ angular.module('starter').controller('categoryController', ['$scope', function($
         id: '1',
         name: 'category1'
     }];
-}])
+}]);
+
+angular.module('starter').controller('ProductDetailController', ['$scope', function($scope) {
+    $scope.product = {
+        id: 1,
+        name: 'name'
+    };
+}]);
