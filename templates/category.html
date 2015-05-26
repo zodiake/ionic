@@ -1,7 +1,7 @@
-<ion-view view-title='products'>
+<ion-view view-title='category'>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="category in categories">
+            <ion-item ng-repeat="category in categories" href="#/tabs/{{category.id}}/products">
                 Hello, {{category}}!
             </ion-item>
         </ion-list>

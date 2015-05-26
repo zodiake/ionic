@@ -1,0 +1,11 @@
+<ion-view view-title='category'>
+    <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
+        <ion-list>
+            <ion-item ng-repeat="product in products" item="product" href="#/tabs/{{product.category}}/products/{{product.id}}">
+                {{product.id}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
