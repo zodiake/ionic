@@ -1,4 +1,4 @@
-angular.module('controller.Order', [])
+angular.module('Order', [])
     .controller('OrderController', ['$scope', function($scope) {
         $scope.orders = [{
             id: 1,

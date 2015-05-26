@@ -1,4 +1,4 @@
-angular.module('controller.Category', [])
+angular.module('Category', [])
     .controller('CategoryController', ['$scope', function($scope) {
         $scope.categories = [{
             id: '1',

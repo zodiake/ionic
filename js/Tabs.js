@@ -1,4 +1,4 @@
-angular.module('controller.Tabs', [])
+angular.module('Tabs', [])
     .controller('TabController', ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
         $rootScope.$on('$ionicView.beforeEnter', function() {
 
