@@ -1,7 +1,7 @@
 <ion-view view-title='order'>
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="order in orders" href="#/tabs/order/:id">
+            <ion-item ng-repeat="order in orders" href="#/tabs/orders/{{order.id}}">
                 Hello, {{order.id}}
             </ion-item>
         </ion-list>

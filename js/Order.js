@@ -16,4 +16,7 @@ angular.module('controller.Order', [])
             id: 5,
             name: 'order5'
         }];
+    }])
+    .controller('OrderDetailController', ['$scope', function($scope) {
+
     }]);
