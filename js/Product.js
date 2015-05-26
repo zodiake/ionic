@@ -5,20 +5,20 @@ angular.module('Product', ['starter.service'])
             name: 'product1'
         }, {
 
-            id: '1',
-            name: 'product1'
+            id: '2',
+            name: 'product2'
         }, {
 
-            id: '1',
-            name: 'product1'
+            id: '3',
+            name: 'product3'
         }, {
 
-            id: '1',
-            name: 'product1'
+            id: '4',
+            name: 'product4'
         }, {
 
-            id: '1',
-            name: 'product1'
+            id: '5',
+            name: 'product5'
         }];
 
         $scope.doRefresh = function() {
@@ -33,7 +33,7 @@ angular.module('Product', ['starter.service'])
     }])
     .controller('ProductDetailController', ['$scope', '$stateParams', '$localstorage', function($scope, $stateParams, $localstorage) {
         $scope.product = {
-            id: 1,
+            id: $stateParams.id,
             name: 'name'
         };
 

@@ -97,5 +97,19 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                     }
                 }
             }
-        });
+        }).state('tabs.mine', {
+            url: '/mine',
+            views: {
+                'mine-tab': {
+                    templateUrl: 'templates/mine.html',
+                }
+            }
+        }).state('tabs.orders', {
+            url: '/mine/orders',
+            views: {
+                'mine-tab': {
+                    templateUrl: 'templates/orders.html'
+                }
+            }
+        }).state('tabs.address', {});
 });

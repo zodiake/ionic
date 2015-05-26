@@ -4,8 +4,12 @@ angular.module('Tabs', [])
 
             $rootScope.hideTabs = false;
 
-            if ($state.current.name === 'tabs.productDetail' || $state.current.name === 'tabs.categoriesProductDetail' || $state.current.name === 'tabs.productDetail' || $state.current.name === 'tabs.orderDetail') {
-                $rootScope.hideTabs = true;
+            switch ($state.current.name) {
+                case 'tabs.productDetail':
+                case 'tabs.categoriesProductDetail':
+                case 'tabs.productDetail':
+                case 'tabs.orderDetail':
+                    $rootScope.hideTabs = true;
             }
         });
     }]);
