@@ -4,7 +4,7 @@ angular.module('controller.Tabs', [])
 
             $rootScope.hideTabs = false;
 
-            if ($state.current.name === 'tabs.productDetail') {
+            if ($state.current.name === 'tabs.productDetail' || $state.current.name === 'tabs.categoriesProductDetail' || $state.current.name === 'tabs.productDetail' || $state.current.name === 'tabs.orderDetail') {
                 $rootScope.hideTabs = true;
             }
         });
