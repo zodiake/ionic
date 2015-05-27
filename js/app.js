@@ -3,20 +3,29 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter.controller', ['Category', 'Cart', 'Product', 'Order', 'Tabs']);
+angular.module('starter.controller', ['Category', 'Cart', 'Product', 'Order', 'Tabs', 'mine.Controller']);
 
-angular.module('starter', ['ionic', 'starter.controller']).run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-        };
-        if (window.StatusBar) {
-            StatusBar.styleDefault();
-        };
-    });
-});
+angular.module('starter', ['ionic', 'starter.controller'])
+    .run(['$ionicPlatform', '$rootScope', '$state', function($ionicPlatform, $rootScope, $state) {
+        $ionicPlatform.ready(function() {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            };
+            if (window.StatusBar) {
+                StatusBar.styleDefault();
+            };
+            $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+                if (error.unAuthorized)
+                    $state.go('login');
+            });
+            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, error) {
+                if (toState.name === 'login')
+                    $rootScope.xToLoginState = fromState.name;
+            });
+        });
+    }]);
 
 angular.module('starter').config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
     $ionicConfigProvider.tabs.position('bottom');
@@ -111,5 +120,24 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                     templateUrl: 'templates/orders.html'
                 }
             }
-        }).state('tabs.address', {});
+        }).state('tabs.address', {
+            url: '/mine/address',
+            views: {
+                'mine-tab': {
+                    templateUrl: 'templates/address.html',
+                    controller: 'AddressController',
+                    resolve: {
+                        user: ['$q', function($q) {
+                            return $q.reject({
+                                unAuthorized: true
+                            });
+                        }]
+                    }
+                }
+            }
+        }).state('login', {
+            url: '/login',
+            templateUrl: 'templates/login.html',
+            controller: 'LoginController'
+        });
 });
