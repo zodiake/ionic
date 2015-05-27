@@ -1,16 +1,19 @@
 <ion-view view-title='home'>
     <ion-content>
         <ion-list>
-            <ion-item href="#/tabs/mine/order">
+            <ion-item href="#/signup">
+                signup
+            </ion-item>
+            <ion-item href="#/tabs/mine/orders">
                 mine order
             </ion-item>
-            <ion-item href="#/tabs/mine/password">
+            <ion-item href="#/tabs/mine/changePassword">
                 change password
             </ion-item>
             <ion-item href="#/tabs/mine/address">
                 address
             </ion-item>
-            <ion-item href="#/tabs/mine/logout">
+            <ion-item ng-click="logout()">
                 logout
             </ion-item>
         </ion-list>

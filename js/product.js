@@ -1,25 +1,12 @@
 angular.module('Product', ['starter.service'])
-    .controller('ProductsController', ['$scope', '$location', '$state', function($scope, $location, $state) {
-        $scope.products = [{
-            id: '1',
-            name: 'product1'
-        }, {
-
-            id: '2',
-            name: 'product2'
-        }, {
-
-            id: '3',
-            name: 'product3'
-        }, {
-
-            id: '4',
-            name: 'product4'
-        }, {
-
-            id: '5',
-            name: 'product5'
-        }];
+    .controller('ProductsController', ['$scope', '$location', '$state', 'ProductResource', function($scope, $location, $state, ProductResource) {
+        $scope.products = "";
+        ProductResource.findAll({
+            page: 1,
+            size: 10
+        }).success(function(data) {
+            $scope.products = data;
+        });
 
         $scope.doRefresh = function() {
 

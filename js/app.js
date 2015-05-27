@@ -3,9 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter.controller', ['Category', 'Cart', 'Product', 'Order', 'Tabs', 'mine.Controller']);
+angular.module('starter.controller', ['Category', 'Cart', 'Product', 'Tabs', 'mine.Controller']);
 
-angular.module('starter', ['ionic', 'starter.controller'])
+angular.module('starter', ['ionic', 'starter.controller', 'starter.service'])
     .run(['$ionicPlatform', '$rootScope', '$state', function($ionicPlatform, $rootScope, $state) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -30,6 +30,14 @@ angular.module('starter', ['ionic', 'starter.controller'])
 angular.module('starter').config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
     $ionicConfigProvider.tabs.position('bottom');
     $urlRouterProvider.otherwise("/tabs/products");
+
+    var loginResolve = {
+        user: ['$q', function($q) {
+            return $q.reject({
+                unAuthorized: true
+            });
+        }]
+    };
 
     $stateProvider
         .state('tabs', {
@@ -100,9 +108,9 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                     templateUrl: 'templates/cart.html',
                     controller: 'CartController',
                     resolve: {
-                        carts: function($localstorage) {
+                        carts: ['$localstorage', function($localstorage) {
                             return JSON.parse($localstorage.get('carts'));
-                        }
+                        }]
                     }
                 }
             }
@@ -111,13 +119,16 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
             views: {
                 'mine-tab': {
                     templateUrl: 'templates/mine.html',
+                    controller: 'MineController'
                 }
             }
         }).state('tabs.orders', {
             url: '/mine/orders',
             views: {
                 'mine-tab': {
-                    templateUrl: 'templates/orders.html'
+                    templateUrl: 'templates/orders.html',
+                    controller: 'OrderController',
+                    resolve: loginResolve
                 }
             }
         }).state('tabs.address', {
@@ -126,18 +137,25 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                 'mine-tab': {
                     templateUrl: 'templates/address.html',
                     controller: 'AddressController',
-                    resolve: {
-                        user: ['$q', function($q) {
-                            return $q.reject({
-                                unAuthorized: true
-                            });
-                        }]
-                    }
+                    resolve: loginResolve
+                }
+            }
+        }).state('tabs.changePassword', {
+            url: '/mine/changePassword',
+            views: {
+                'mine-tab': {
+                    templateUrl: 'templates/changePassword.html',
+                    controller: 'ChangePasswordController',
+                    resolve: loginResolve
                 }
             }
         }).state('login', {
             url: '/login',
             templateUrl: 'templates/login.html',
             controller: 'LoginController'
+        }).state('signup', {
+            url: '/signup',
+            templateUrl: 'templates/signup.html',
+            controller: 'SignupController'
         });
 });
