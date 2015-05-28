@@ -18,7 +18,6 @@ angular.module('Product', ['starter.service'])
                     size: $scope.page * 10
                 }).success(function(data) {
                     $scope.products = data;
-                    $scope.show = false;
                 }).error(function() {
                     netWorkError();
                 });

@@ -7,6 +7,7 @@
                 {{product.id}}
             </ion-item>
         </ion-list>
-        <button class="button" ng-show="products.length>0" ng-click="loadMore()">load more</button>
+        <ion-infinite-scroll on-infinite="loadMore()" distance="1%">
+        </ion-infinite-scroll>
     </ion-content>
 </ion-view>
