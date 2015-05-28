@@ -46,7 +46,8 @@ angular.module('starter.service', [])
                 params: {
                     page: pageable.page,
                     size: pageable.size
-                }
+                },
+                timeout: 6000
             })
         };
         this.findOne = function(id) {

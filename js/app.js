@@ -27,7 +27,7 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service'])
         });
     }]);
 
-angular.module('starter').config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
+angular.module('starter').config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
     $ionicConfigProvider.tabs.position('bottom');
     $urlRouterProvider.otherwise("/tabs/products");
 
@@ -38,7 +38,6 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
             });
         }]
     };
-
     $stateProvider
         .state('tabs', {
             abstract: true,
