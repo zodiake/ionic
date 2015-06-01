@@ -56,4 +56,5 @@ angular.module('starter.service', [])
                 url: ajaxConfig.url + '/products/' + id
             })
         };
+    }]).service('socket',[function(){
     }]);

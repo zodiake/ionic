@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter.controller', ['Category', 'Cart', 'Product', 'Tabs', 'mine.Controller']);
 
-angular.module('starter', ['ionic', 'starter.controller', 'starter.service'])
+angular.module('starter', ['ionic', 'starter.controller', 'starter.service','ngCordova'])
     .run(['$ionicPlatform', '$rootScope', '$state', function ($ionicPlatform, $rootScope, $state) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
