@@ -6,33 +6,33 @@
 angular.module('starter.controller', ['Category', 'Cart', 'Product', 'Tabs', 'mine.Controller']);
 
 angular.module('starter', ['ionic', 'starter.controller', 'starter.service'])
-    .run(['$ionicPlatform', '$rootScope', '$state', function($ionicPlatform, $rootScope, $state) {
-        $ionicPlatform.ready(function() {
+    .run(['$ionicPlatform', '$rootScope', '$state', function ($ionicPlatform, $rootScope, $state) {
+        $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            };
+            }
             if (window.StatusBar) {
                 StatusBar.styleDefault();
-            };
-            $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+            }
+            $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
                 if (error.unAuthorized)
                     $state.go('login');
             });
-            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, error) {
+            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, error) {
                 if (toState.name === 'login')
                     $rootScope.xToLoginState = fromState.name;
             });
         });
     }]);
 
-angular.module('starter').config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
+angular.module('starter').config(function ($ionicConfigProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
     $ionicConfigProvider.tabs.position('bottom');
     $urlRouterProvider.otherwise("/tabs/products");
 
     var loginResolve = {
-        user: ['$q', function($q) {
+        user: ['$q', function ($q) {
             return $q.reject({
                 unAuthorized: true
             });
@@ -73,7 +73,12 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
             views: {
                 'products-tab': {
                     templateUrl: 'templates/products.html',
-                    controller: 'ProductsController'
+                    controller: 'ProductsController',
+                    resolve: {
+                        count: ['ProductResource', function (ProductResource) {
+                            return 100;
+                        }]
+                    }
                 }
             }
         }).state('tabs.productDetail', {
@@ -107,7 +112,7 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                     templateUrl: 'templates/cart.html',
                     controller: 'CartController',
                     resolve: {
-                        carts: ['$localstorage', function($localstorage) {
+                        carts: ['$localstorage', function ($localstorage) {
                             return JSON.parse($localstorage.get('carts'));
                         }]
                     }
