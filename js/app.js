@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter.controller', ['Category', 'Cart', 'Product', 'Tabs', 'mine.Controller']);
 
-angular.module('starter', ['ionic', 'starter.controller', 'starter.service','ngCordova'])
-    .run(['$ionicPlatform', '$rootScope', '$state', function ($ionicPlatform, $rootScope, $state) {
-        $ionicPlatform.ready(function () {
+angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'ngCordova'])
+    .run(['$ionicPlatform', '$rootScope', '$state', function($ionicPlatform, $rootScope, $state) {
+        $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -16,23 +16,23 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service','ngC
             if (window.StatusBar) {
                 StatusBar.styleDefault();
             }
-            $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+            $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
                 if (error.unAuthorized)
                     $state.go('login');
             });
-            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, error) {
+            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, error) {
                 if (toState.name === 'login')
                     $rootScope.xToLoginState = fromState.name;
             });
         });
     }]);
 
-angular.module('starter').config(function ($ionicConfigProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
+angular.module('starter').config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
     $ionicConfigProvider.tabs.position('bottom');
     $urlRouterProvider.otherwise("/tabs/products");
 
     var loginResolve = {
-        user: ['$q', function ($q) {
+        user: ['$q', function($q) {
             return $q.reject({
                 unAuthorized: true
             });
@@ -49,7 +49,12 @@ angular.module('starter').config(function ($ionicConfigProvider, $stateProvider,
             views: {
                 'category-tab': {
                     templateUrl: 'templates/category.html',
-                    controller: 'CategoryController'
+                    controller: 'CategoryController',
+                    resolve: {
+                        categories: function($localstorage) {
+                            return JSON.parse($localstorage.get('carts'));
+                        }
+                    }
                 }
             }
         }).state('tabs.categoriesProducts', {
@@ -73,12 +78,7 @@ angular.module('starter').config(function ($ionicConfigProvider, $stateProvider,
             views: {
                 'products-tab': {
                     templateUrl: 'templates/products.html',
-                    controller: 'ProductsController',
-                    resolve: {
-                        count: ['ProductResource', function (ProductResource) {
-                            return 100;
-                        }]
-                    }
+                    controller: 'ProductsController'
                 }
             }
         }).state('tabs.productDetail', {
@@ -110,12 +110,7 @@ angular.module('starter').config(function ($ionicConfigProvider, $stateProvider,
             views: {
                 'cart-tab': {
                     templateUrl: 'templates/cart.html',
-                    controller: 'CartController',
-                    resolve: {
-                        carts: ['$localstorage', function ($localstorage) {
-                            return JSON.parse($localstorage.get('carts'));
-                        }]
-                    }
+                    controller: 'CartController'
                 }
             }
         }).state('tabs.mine', {

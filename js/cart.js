@@ -3,6 +3,13 @@
  *
  * Description
  */
-angular.module('Cart', []).controller('CartController', ['$scope', 'carts', function($scope, carts) {
-    $scope.carts = carts;
-}]);
+angular.module('Cart', ['starter.service'])
+    .controller('CartController', ['$scope', '$localstorage',
+        function($scope, $localstorage) {
+            $scope.$on('$ionicView.beforeEnter',
+                function() {
+                    $scope.carts = JSON.parse($localstorage.get('carts'));
+                }
+            );
+        }
+    ]);

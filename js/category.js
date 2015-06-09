@@ -1,18 +1,6 @@
 angular.module('Category', [])
-    .controller('CategoryController', ['$scope', function($scope) {
-        $scope.categories = [{
-            id: '1',
-            name: 'category1'
-        }, {
-            id: '1',
-            name: 'category1'
-        }, {
-            id: '1',
-            name: 'category1'
-        }, {
-            id: '1',
-            name: 'category1'
-        }];
+    .controller('CategoryController', ['$scope', 'categories', function($scope, categories) {
+        $scope.categories = categories;
     }])
     .controller('CategoryProductController', ['$scope', function($scope) {
         $scope.products = [{
