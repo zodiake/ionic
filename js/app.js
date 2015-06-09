@@ -17,7 +17,6 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'ng
                 StatusBar.styleDefault();
             }
             $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-                alert(22);
                 if (error.unAuthorized) {
                     $state.go('tabs.login');
                 }
@@ -137,17 +136,7 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                 'mine-tab': {
                     templateUrl: 'templates/changePassword.html',
                     controller: 'ChangePasswordController',
-                    resolve: {
-                        user: ['$q', '$timeout', function($q, $timeout) {
-                            var defer = $q.defer();
-                            $timeout(function() {
-                                defer.reject({
-                                    unAuthorized: true
-                                });
-                            }, 50);
-                            return defer.promise;
-                        }]
-                    }
+                    resolve: loginResolve
                 }
             }
         }).state('tabs.login', {
