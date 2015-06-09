@@ -40,4 +40,7 @@ angular.module('mine.Controller', ['starter.service'])
         $scope.back = function() {
             $state.go('tabs.mine');
         };
+    }])
+    .controller('ChangePasswordController', ['$scope', function($scope) {
+
     }]);

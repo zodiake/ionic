@@ -1,6 +1,12 @@
 angular.module('Category', [])
-    .controller('CategoryController', ['$scope', 'categories', function($scope, categories) {
-        $scope.categories = categories;
+    .controller('CategoryController', ['$scope', function($scope) {
+        $scope.categories = [{
+            id: 1,
+            name: 'category1'
+        }, {
+            id: 2,
+            name: 'category2'
+        }];
     }])
     .controller('CategoryProductController', ['$scope', function($scope) {
         $scope.products = [{

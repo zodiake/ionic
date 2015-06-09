@@ -17,12 +17,10 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'ng
                 StatusBar.styleDefault();
             }
             $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-                if (error.unAuthorized)
-                    $state.go('login');
-            });
-            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, error) {
-                if (toState.name === 'login')
-                    $rootScope.xToLoginState = fromState.name;
+                alert(22);
+                if (error.unAuthorized) {
+                    $state.go('tabs.login');
+                }
             });
         });
     }]);
@@ -38,6 +36,7 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
             });
         }]
     };
+
     $stateProvider
         .state('tabs', {
             abstract: true,
@@ -49,12 +48,7 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
             views: {
                 'category-tab': {
                     templateUrl: 'templates/category.html',
-                    controller: 'CategoryController',
-                    resolve: {
-                        categories: function($localstorage) {
-                            return JSON.parse($localstorage.get('carts'));
-                        }
-                    }
+                    controller: 'CategoryController'
                 }
             }
         }).state('tabs.categoriesProducts', {
@@ -127,7 +121,6 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                 'mine-tab': {
                     templateUrl: 'templates/orders.html',
                     controller: 'OrderController',
-                    resolve: loginResolve
                 }
             }
         }).state('tabs.address', {
@@ -136,7 +129,6 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                 'mine-tab': {
                     templateUrl: 'templates/address.html',
                     controller: 'AddressController',
-                    resolve: loginResolve
                 }
             }
         }).state('tabs.changePassword', {
@@ -145,16 +137,34 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                 'mine-tab': {
                     templateUrl: 'templates/changePassword.html',
                     controller: 'ChangePasswordController',
-                    resolve: loginResolve
+                    resolve: {
+                        user: ['$q', '$timeout', function($q, $timeout) {
+                            var defer = $q.defer();
+                            $timeout(function() {
+                                defer.reject({
+                                    unAuthorized: true
+                                });
+                            }, 50);
+                            return defer.promise;
+                        }]
+                    }
                 }
             }
-        }).state('login', {
+        }).state('tabs.login', {
             url: '/login',
-            templateUrl: 'templates/login.html',
-            controller: 'LoginController'
-        }).state('signup', {
+            views: {
+                'mine-tab': {
+                    templateUrl: 'templates/login.html',
+                    controller: 'LoginController'
+                }
+            }
+        }).state('tabs.signup', {
             url: '/signup',
-            templateUrl: 'templates/signup.html',
-            controller: 'SignupController'
+            views: {
+                'mine-tab': {
+                    templateUrl: 'templates/signup.html',
+                    controller: 'SignupController'
+                }
+            }
         });
 });

@@ -9,6 +9,7 @@ angular.module('Tabs', [])
                 case 'tabs.categoriesProductDetail':
                 case 'tabs.productDetail':
                 case 'tabs.orderDetail':
+                case 'tabs.signup':
                     $rootScope.hideTabs = true;
             }
         });
