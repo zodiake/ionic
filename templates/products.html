@@ -4,7 +4,7 @@
         </ion-refresher>
         <ion-list>
             <ion-item ng-repeat="product in products" item="product" href="#/tabs/products/{{product.id}}">
-                {{product.id}}
+                {{product.name}}
             </ion-item>
         </ion-list>
         <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%">

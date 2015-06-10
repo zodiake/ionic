@@ -1,11 +1,11 @@
 angular.module('Product', ['starter.service'])
     .controller('ProductsController', [
         '$scope',
-        '$state',
         'ProductResource',
         '$ionicPopup',
         '$ionicPlatform',
-        function($scope, $state, ProductResource, $ionicPopup, $ionicPlatform) {
+        '$localstorage',
+        function($scope, ProductResource, $ionicPopup, $ionicPlatform, $localstorage) {
             var netWorkError = function() {
                 $ionicPopup.alert({
                     title: 'alert',
@@ -25,46 +25,71 @@ angular.module('Product', ['starter.service'])
                         size: 10
                     })
                     .success(function(data) {
-                        if ($scope.products.length == 0) {
-                            $scope.products = data
+                        if (data.length == 0) {
+                            $scope.hasMore = false;
                         } else {
-                            $scope.products = $scope.products.concat(data);
+                            if ($scope.products.length == 0) {
+                                $scope.products = data
+                            } else {
+                                $scope.products = $scope.products.concat(data);
+                            }
+                            $scope.hasMore = true;
+                            $scope.page += 1;
+                            $localstorage.pushArray('products', data);
+                            $scope.$broadcast('scroll.infiniteScrollComplete');
                         }
-                        $scope.hasMore = true;
-                        $scope.page += 1;
-                        $scope.$broadcast('scroll.infiniteScrollComplete');
                     })
                     .error(function() {
                         netWorkError();
+                        if ($scope.products.length == 0) {
+                            $scope.products = $localstorage.getObject('products');
+                        }
                     });
             };
 
             $scope.doRefresh = function() {
-                console.log($scope.page);
                 ProductResource
                     .findAll({
                         page: 1,
                         size: $scope.page * 10
                     })
                     .success(function(data) {
-                        $scope.products = data;
-                        $scope.hasMore = true;
-                        $scope.$broadcast('scroll.refreshComplete');
+                        if (data.length == 0) {
+                            $scope.hasMore = false;
+                        } else {
+                            $scope.products = data;
+                            $scope.hasMore = true;
+                            $scope.$broadcast('scroll.refreshComplete');
+                            $localstorage.setObject('products', data);
+                        }
                     })
                     .error(function() {
                         netWorkError();
+                        $scope.producs = $localstorage.get('products');
                         $scope.$broadcast('scroll.refreshComplete');
                     });
             }
         }
     ])
-    .controller('ProductDetailController', ['$scope', '$stateParams', '$localstorage', function($scope, $stateParams, $localstorage) {
-        $scope.product = {
-            id: $stateParams.id,
-            name: 'name'
-        };
-
-        $scope.addToCart = function(product) {
-            $localstorage.pushArray('carts', product);
-        };
-    }]);
+    .controller('ProductDetailController', [
+        '$scope',
+        '$stateParams',
+        '$localstorage',
+        'ProductResource',
+        function($scope, $stateParams, $localstorage, ProductResource) {
+            $scope.product = {};
+            ProductResource
+                .findOne($stateParams.id)
+                .success(function(data) {
+                    $scope.product = {
+                        id: data.id,
+                        name: data.name
+                    };
+                }).error(function() {
+                    alert('error');
+                });
+            $scope.addToCart = function(product) {
+                $localstorage.pushArray('carts', product);
+            };
+        }
+    ]);

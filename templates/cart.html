@@ -3,9 +3,12 @@
         <ion-list>
             <ion-item ng-repeat="cart in carts">
                 carid, {{cart.id}},cartName:{{cart.name}}
+                <ion-option-button class="button-assertive" ng-click="delete(cart)">
+                    delete
+                </ion-option-button>
             </ion-item>
         </ion-list>
-        <button ng-click="show()">show
+        <button class="button" ng-click="submit()">checkout
         </button>
     </ion-content>
 </ion-view>
