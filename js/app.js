@@ -29,10 +29,12 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
     $urlRouterProvider.otherwise("/tabs/products");
 
     var loginResolve = {
-        user: ['$q', function($q) {
-            return $q.reject({
-                unAuthorized: true
-            });
+        user: ['$q', '$window', function($q, $window) {
+            if ($window.localStorage['user'] == null) {
+                return $q.reject({
+                    unAuthorized: true
+                });
+            }
         }]
     };
 

@@ -8,7 +8,7 @@ angular.module('starter.service', [])
                 return $window.localStorage[key] || defaultValue;
             },
             delete: function(key) {
-                return $window.removeItem(key);
+                return $window.localStorage.removeItem(key);
             },
             setObject: function(key, value) {
                 $window.localStorage[key] = JSON.stringify(value);
@@ -56,4 +56,12 @@ angular.module('starter.service', [])
                 url: ajaxConfig.url + '/products/' + id
             })
         };
+    }])
+    .service('UserService', ['$http', 'ajaxConfig', function($http, ajaxConfig) {
+        this.login = function(user) {
+            return $http.post(ajaxConfig.url + '/user/login', {
+                name: user.name,
+                password: user.password
+            });
+        }
     }]);

@@ -1,16 +1,18 @@
 <ion-view view-title='login'>
     <ion-content padding="true">
         <div class="list">
-            <label class="item item-input">
-                <span class="input-label">Username</span>
-                <input type="text">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Password</span>
-                <input type="password">
-            </label>
-            <button class="button button-full button-positive">login
-            </button>
+            <form ng-submit="login()">
+                <label class="item item-input">
+                    <span class="input-label">Username</span>
+                    <input type="text" ng-model='user.name'>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Password</span>
+                    <input type="password" ng-model='user.password'>
+                </label>
+                <input type='submit' class="button button-full button-positive">
+                </input>
+            </form>
         </div>
     </ion-content>
 </ion-view>

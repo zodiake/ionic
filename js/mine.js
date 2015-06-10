@@ -2,7 +2,6 @@ angular.module('mine.Controller', ['starter.service'])
     .controller('MineController', ['$scope', '$state', '$localstorage', function($scope, $state, $localstorage) {
         $scope.logout = function() {
             $localstorage.delete('user');
-            $state.go('tabs.products');
         };
     }])
     .controller('LoginController', ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
@@ -43,4 +42,21 @@ angular.module('mine.Controller', ['starter.service'])
     }])
     .controller('ChangePasswordController', ['$scope', function($scope) {
 
-    }]);
+    }])
+    .controller('LoginController', [
+        '$scope',
+        'UserService',
+        '$state',
+        '$localstorage',
+        function($scope, UserService, $state, $localstorage) {
+            $scope.user = {};
+            $scope.login = function() {
+                UserService.login($scope.user).success(function(data) {
+                    $localstorage.set('user', 'data');
+                    $state.go('tabs.products');
+                }).error(function(error) {
+                    alert(error);
+                });
+            }
+        }
+    ]);
