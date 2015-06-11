@@ -13,8 +13,11 @@ angular.module('starter.service', [])
             setObject: function(key, value) {
                 $window.localStorage[key] = JSON.stringify(value);
             },
-            getObject: function(key) {
-                return JSON.parse($window.localStorage[key] || '{}');
+            getObject: function(key, defaultValue) {
+                if (defaultValue.length)
+                    return JSON.parse($window.localStorage[key] || "[]");
+                else
+                    return JSON.parse($window.localStorage[key] || "{}");
             },
             pushArray: function(key, object) {
                 var array = $window.localStorage[key],

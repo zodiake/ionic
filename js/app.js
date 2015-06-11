@@ -18,7 +18,7 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'ng
             }
             $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
                 if (error.unAuthorized) {
-                    $state.go('tabs.login');
+                    $state.go('login');
                 }
             });
         });

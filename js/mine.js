@@ -35,22 +35,26 @@ angular.module('mine.Controller', ['starter.service'])
         '$stateParams',
         '$localstorage',
         function($scope, AddressService, $stateParams, $localstorage) {
-            $scope.address = $localstorage.getObject('address' + $stateParams.id);
-            if ($scope.cities == undefined) {
+            $scope.address = $localstorage.getObject('address' + $stateParams.id, []);
+            $scope.cities = $localstorage.getObject('cities', []);
+            $scope.provinces = $localstorage.getObject('provinces', []);
+            if ($scope.cities.length == 0) {
                 AddressService
                     .findAllCities()
                     .success(function(data) {
                         $scope.cities = data;
+                        $localstorage.setObject('cities', data);
                     })
                     .error(function(err) {
 
                     });
             }
-            if ($scope.province == undefined) {
+            if ($scope.provinces.length == 0) {
                 AddressService
                     .findAllProvinces()
                     .success(function(data) {
                         $scope.provinces = data;
+                        $localstorage.setObject('provinces', data);
                     })
                     .error(function(err) {
 
