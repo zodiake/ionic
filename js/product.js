@@ -40,10 +40,10 @@ angular.module('Product', ['starter.service'])
                         }
                     })
                     .error(function() {
-                        netWorkError();
                         if ($scope.products.length == 0) {
                             $scope.products = $localstorage.getObject('products');
                         }
+                        netWorkError();
                     });
             };
 

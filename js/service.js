@@ -70,4 +70,17 @@ angular.module('starter.service', [])
                 password: user.password
             });
         }
+    }])
+    .service('AddressService', ['$http', 'ajaxConfig', function($http, ajaxConfig) {
+        this.findAll = function(userId) {
+            return $http.get(ajaxConfig.url + '/address', {
+                id: userId
+            });
+        };
+        this.findAllCities = function() {
+            return $http.get(ajaxConfig.url + '/address/cities');
+        };
+        this.findAllProvinces = function() {
+            return $http.get(ajaxConfig.url + '/address/province');
+        }
     }]);

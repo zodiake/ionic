@@ -142,6 +142,15 @@ angular.module('starter').config(function($ionicConfigProvider, $stateProvider, 
                     resolve: loginResolve
                 }
             }
+        }).state('tabs.addressDetail', {
+            url: '/address/:id',
+            views: {
+                'mine-tab': {
+                    templateUrl: 'templates/addressDetail.html',
+                    controller: 'AddressDetailController',
+                    resolve: loginResolve
+                }
+            }
         }).state('tabs.changePassword', {
             url: '/mine/changePassword',
             views: {

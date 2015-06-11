@@ -1,8 +1,10 @@
 <ion-view view-title="{{product.name}}">
     <ion-content class="padding">
-        <div>
-            {{product.id}} {{product.name}}
-        </div>
+        <ion-list>
+            <ion-item ng-repeat="address in addresses" item="product" href="#/tabs/address/{{address.id}}">
+                {{address}}
+            </ion-item>
+        </ion-list>
         <button class="button button-positive" ng-click="addToCart(product)">add</button>
     </ion-content>
 </ion-view>

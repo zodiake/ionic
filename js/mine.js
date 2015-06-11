@@ -12,9 +12,53 @@ angular.module('mine.Controller', ['starter.service'])
             $state.go($rootScope.xToLoginState);
         }
     }])
-    .controller('AddressController', ['$scope', function($scope, $ionicPopover) {
+    .controller('AddressController', [
+        '$scope',
+        'AddressService',
+        '$localstorage',
+        function($scope, AddressService, $localstorage) {
+            if ($scope.addresses == undefined) {
+                AddressService.findAll(1).success(function(data) {
+                    $scope.addresses = data;
+                    $scope.addresses.forEach(function(item) {
+                        $localstorage.setObject('address' + item.id, item);
+                    });
+                }).error(function(err) {
 
-    }])
+                });
+            }
+        }
+    ])
+    .controller('AddressDetailController', [
+        '$scope',
+        'AddressService',
+        '$stateParams',
+        '$localstorage',
+        function($scope, AddressService, $stateParams, $localstorage) {
+            $scope.address = $localstorage.getObject('address' + $stateParams.id);
+            if ($scope.cities == undefined) {
+                AddressService
+                    .findAllCities()
+                    .success(function(data) {
+                        $scope.cities = data;
+                    })
+                    .error(function(err) {
+
+                    });
+            }
+            if ($scope.province == undefined) {
+                AddressService
+                    .findAllProvinces()
+                    .success(function(data) {
+                        $scope.provinces = data;
+                    })
+                    .error(function(err) {
+
+                    });
+            }
+
+        }
+    ])
     .controller('OrderController', ['$scope', function($scope) {
         $scope.orders = [{
             id: 1,
@@ -68,6 +112,9 @@ angular.module('mine.Controller', ['starter.service'])
                 }).error(function(error) {
                     alert(error);
                 });
+            };
+            $scope.back = function() {
+                $state.go('tabs.mine');
             }
         }
     ]);

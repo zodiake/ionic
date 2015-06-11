@@ -1,0 +1,28 @@
+<ion-view view-title="detail">
+    <ion-content class="padding">
+        <form>
+            <label class="item item-input item-select">
+                <div class="input-label">province</div>
+                <select ng-model="address.province">
+                    <option ng-selected="{{province.id==address.province}}" ng-repeat="province in provinces">
+                        {{province.name}}
+                    </option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">city</div>
+                <select ng-model="address.city">
+                    <option ng-selected="{{city.id==address.city}}" ng-repeat="city in cities">
+                        {{city.name}}
+                    </option>
+                </select>
+            </label>
+            <label class="item item-input">
+                <div class="input-label">street</div>
+                <input type="text" ng-model="address.street" />
+            </label>
+            <button class="button button-full button-positive">submit
+            </button>
+        </form>
+    </ion-content>
+</ion-view>
