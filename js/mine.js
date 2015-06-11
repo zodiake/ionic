@@ -35,11 +35,19 @@ angular.module('mine.Controller', ['starter.service'])
     }])
     .controller('OrderDetailController', ['$scope', function($scope) {
 
-    }]).controller('SignupController', ['$state', '$scope', function($state, $scope) {
-        $scope.back = function() {
-            $state.go('tabs.mine');
-        };
-    }])
+    }]).controller('SignupController', ['$state', '$scope', 'UserService', '$localstorage',
+        function($state, $scope, userService, $localstorage) {
+            $scope.signup = function(user) {
+                userService
+                    .signup(user)
+                    .success(function(data) {
+                        $localstorage.set('user', data);
+                    }).error(function(err) {
+                        alert(err);
+                    });
+            };
+        }
+    ])
     .controller('ChangePasswordController', ['$scope', function($scope) {
 
     }])
@@ -50,10 +58,13 @@ angular.module('mine.Controller', ['starter.service'])
         '$localstorage',
         function($scope, UserService, $state, $localstorage) {
             $scope.user = {};
+            $scope.hideBackButton = false;
             $scope.login = function() {
                 UserService.login($scope.user).success(function(data) {
                     $localstorage.set('user', 'data');
-                    $state.go('tabs.products');
+                    $state.go('tabs.products', {}, {
+                        reload: true
+                    });
                 }).error(function(error) {
                     alert(error);
                 });

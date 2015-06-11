@@ -1,18 +1,21 @@
-<ion-view view-title='login'>
-    <ion-content padding="true">
+<ion-view view-title='login' cache-view="false" hide-back-button="false">
+    <ion-nav-buttons side="left">
+        <button class="button back-button buttons  button-clear header-item" ng-click="$ionicGoBack($event)">
+            <i class="icon ion-ios-arrow-back"></i> Back
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="padding">
         <div class="list">
-            <form ng-submit="login()">
-                <label class="item item-input">
-                    <span class="input-label">Username</span>
-                    <input type="text" ng-model='user.name'>
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">Password</span>
-                    <input type="password" ng-model='user.password'>
-                </label>
-                <input type='submit' class="button button-full button-positive">
-                </input>
-            </form>
+            <label class="item item-input">
+                <span class="input-label">Username</span>
+                <input type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Password</span>
+                <input type="password">
+            </label>
+            <button class="button button-full button-positive">login
+            </button>
         </div>
     </ion-content>
 </ion-view>

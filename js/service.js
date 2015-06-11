@@ -64,4 +64,10 @@ angular.module('starter.service', [])
                 password: user.password
             });
         }
+        this.signup = function(user) {
+            return $http.post(ajaxConfig.url + '/user/signup', {
+                name: user.name,
+                password: user.password
+            });
+        }
     }]);

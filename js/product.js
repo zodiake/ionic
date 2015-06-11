@@ -86,7 +86,7 @@ angular.module('Product', ['starter.service'])
                         name: data.name
                     };
                 }).error(function() {
-                    alert('error');
+                    console.log('net error');
                 });
             $scope.addToCart = function(product) {
                 $localstorage.pushArray('carts', product);
