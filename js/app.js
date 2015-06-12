@@ -178,14 +178,10 @@ angular.module('starter').config(['$ionicConfigProvider',
                 url: '/login',
                 templateUrl: 'templates/login.html',
                 controller: 'LoginController'
-            }).state('tabs.signup', {
+            }).state('signup', {
                 url: '/signup',
-                views: {
-                    'mine-tab': {
-                        templateUrl: 'templates/signup.html',
-                        controller: 'SignupController'
-                    }
-                }
+                templateUrl: 'templates/signup.html',
+                controller: 'SignupController'
             });
     }
 ]);

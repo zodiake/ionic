@@ -79,11 +79,16 @@ angular.module('starter.service', [])
                 name: user.name,
                 password: user.password
             });
-        }
+        };
         this.signup = function(user) {
             return $http.post(ajaxConfig.url + '/user/signup', {
                 name: user.name,
                 password: user.password
+            });
+        };
+        this.getCaptcha = function(mobile) {
+            return $http.get(ajaxConfig.url + '/user/captcha', {
+                mobile: mobile
             });
         }
     }])

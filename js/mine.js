@@ -4,14 +4,6 @@ angular.module('mine.Controller', ['starter.service'])
             $localstorage.delete('user');
         };
     }])
-    .controller('LoginController', ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
-        $scope.login = function() {
-            $state.go($rootScope.xToLoginState);
-        };
-        $scope.back = function() {
-            $state.go($rootScope.xToLoginState);
-        }
-    }])
     .controller('AddressController', [
         '$scope',
         'AddressService',
@@ -60,7 +52,6 @@ angular.module('mine.Controller', ['starter.service'])
 
                     });
             }
-
         }
     ])
     .controller('OrderController', ['$scope', function($scope) {
@@ -83,15 +74,37 @@ angular.module('mine.Controller', ['starter.service'])
     }])
     .controller('OrderDetailController', ['$scope', function($scope) {
 
-    }]).controller('SignupController', ['$state', '$scope', 'UserService', '$localstorage',
-        function($state, $scope, userService, $localstorage) {
-            $scope.signup = function(user) {
+    }]).controller('SignupController', [
+        '$state',
+        '$scope',
+        'UserService',
+        '$localstorage',
+        '$ionicPopup',
+        function($state, $scope, userService, $localstorage, $ionicPopup) {
+            $scope.user = {};
+            $scope.signup = function(form) {
+                if (form.$valid) {
+                    userService
+                        .signup($scope.user)
+                        .success(function(data) {
+                            console.log(data);
+                        })
+                        .error(function() {
+
+                        });
+                }
+            };
+            $scope.getCaptcha = function(mobile) {
                 userService
-                    .signup(user)
+                    .getCaptcha(mobile)
                     .success(function(data) {
-                        $localstorage.set('user', data);
-                    }).error(function(err) {
-                        alert(err);
+                        $scope.user.captcha = data;
+                    })
+                    .error(function(err) {
+                        ionicPopup.alert({
+                            title: 'error',
+                            template: err
+                        });
                     });
             };
         }
@@ -113,7 +126,6 @@ angular.module('mine.Controller', ['starter.service'])
                         $state.go('tabs.products');
                         $localstorage.set('user', data.token);
                     }).error(function(err) {
-                        console.log(22);
                         $ionicPopup.alert({
                             title: 'fail',
                             template: 'name or password error'
