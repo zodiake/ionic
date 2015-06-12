@@ -19,22 +19,35 @@ angular.module('starter.service', [])
                 else
                     return JSON.parse($window.localStorage[key] || "{}");
             },
-            pushArray: function(key, object) {
+            add: function(key, object) {
                 var array = $window.localStorage[key],
                     source;
-                if (array == null || array == 'undefined') {
+                if (array == null || array == undefined) {
                     source = [];
                 } else {
                     source = JSON.parse(array);
                     if (source.some(function(s) {
                             return s.id === object.id;
                         })) {
-                        console.log('exist');
                         return;
                     }
                 }
                 source.push(object);
                 $window.localStorage[key] = JSON.stringify(source);
+            },
+            concat: function(key, object) {
+                if (!Array.isArray(object)) {
+                    console.log("object is not an array");
+                    return;
+                }
+                var array = $window.localStorage[key],
+                    source;
+                source = array == null ? [] : JSON.parse(array);
+                var filteredArray = object.filter(function(o) {
+                    return source.indexOf(o) == -1 ? true : false;
+                });
+                var concated = source.concat(filteredArray);
+                $window.localStorage[key] = JSON.stringify(concated);
             }
         }
     }])

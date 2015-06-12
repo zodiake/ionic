@@ -104,21 +104,25 @@ angular.module('mine.Controller', ['starter.service'])
         'UserService',
         '$state',
         '$localstorage',
-        function($scope, UserService, $state, $localstorage) {
+        '$ionicPopup',
+        function($scope, UserService, $state, $localstorage, $ionicPopup) {
             $scope.user = {};
-            $scope.hideBackButton = false;
-            $scope.login = function() {
-                UserService.login($scope.user).success(function(data) {
-                    $localstorage.set('user', 'data');
-                    $state.go('tabs.products', {}, {
-                        reload: true
+            $scope.submitForm = function(loginForm) {
+                if (loginForm.$valid) {
+                    UserService.login($scope.user).success(function(data) {
+                        $state.go('tabs.products');
+                        $localstorage.set('user', data.token);
+                    }).error(function(err) {
+                        console.log(22);
+                        $ionicPopup.alert({
+                            title: 'fail',
+                            template: 'name or password error'
+                        });
                     });
-                }).error(function(error) {
-                    alert(error);
-                });
+                }
             };
             $scope.back = function() {
                 $state.go('tabs.mine');
-            }
+            };
         }
     ]);

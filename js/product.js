@@ -35,14 +35,16 @@ angular.module('Product', ['starter.service'])
                             }
                             $scope.hasMore = true;
                             $scope.page += 1;
-                            $localstorage.pushArray('products', data);
+                            $localstorage.concat('products', data);
                             $scope.$broadcast('scroll.infiniteScrollComplete');
                         }
                     })
                     .error(function() {
                         if ($scope.products.length == 0) {
-                            $scope.products = $localstorage.getObject('products');
+                            var cacheArray = $localstorage.getObject('products', []);
+                            $scope.products = cacheArray.length > 0 ? cacheArray : null;
                         }
+                        $scope.hasMore = false;
                         netWorkError();
                     });
             };
@@ -89,7 +91,7 @@ angular.module('Product', ['starter.service'])
                     console.log('net error');
                 });
             $scope.addToCart = function(product) {
-                $localstorage.pushArray('carts', product);
+                $localstorage.add('carts', product);
             };
         }
     ]);
