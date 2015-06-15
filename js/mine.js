@@ -54,34 +54,56 @@ angular.module('mine.Controller', ['starter.service'])
             }
         }
     ])
-    .controller('OrderController', ['$scope', function($scope) {
-        $scope.orders = [{
-            id: 1,
-            name: 'order1'
-        }, {
-            id: 2,
-            name: 'order2'
-        }, {
-            id: 3,
-            name: 'order3'
-        }, {
-            id: 4,
-            name: 'order4'
-        }, {
-            id: 5,
-            name: 'order5'
-        }];
-    }])
-    .controller('OrderDetailController', ['$scope', function($scope) {
+    .controller('OrderController', [
+        '$scope',
+        'OrderService',
+        '$localstorage',
+        function($scope, OrderService, $localstorage) {
+            function init() {
+                OrderService
+                    .findAll()
+                    .success(function(data) {
+                        var orders = [];
+                        for (key in data) {
+                            orders.push({
+                                id: data[key][0].id,
+                                total: data[key][0].total
+                            });
+                        }
+                        $scope.orders = orders;
+                        $localstorage.setObject('orders', data);
+                    })
+                    .error(function() {
 
-    }]).controller('SignupController', [
+                    });
+            }
+
+            init();
+
+            $scope.doRefresh = function() {
+                init();
+                $scope.$broadcast('scroll.refreshComplete');
+            }
+        }
+    ]).controller('OrderDetailController', [
+        '$scope',
+        'OrderService',
+        '$stateParams',
+        '$localstorage',
+        function($scope, OrderService, $stateParams, $localstorage) {
+            var orders = $localstorage.getObject('orders', []);
+            $scope.orders = orders[$stateParams.id];
+        }
+    ]).controller('SignupController', [
         '$state',
         '$scope',
         'UserService',
         '$localstorage',
         '$ionicPopup',
-        function($state, $scope, userService, $localstorage, $ionicPopup) {
+        '$q',
+        function($state, $scope, userService, $localstorage, $ionicPopup, $q) {
             $scope.user = {};
+
             $scope.signup = function(form) {
                 if (form.$valid) {
                     userService
@@ -94,17 +116,17 @@ angular.module('mine.Controller', ['starter.service'])
                         });
                 }
             };
+
             $scope.getCaptcha = function(mobile) {
                 userService
-                    .getCaptcha(mobile)
+                    .countByName(mobile)
                     .success(function(data) {
-                        $scope.user.captcha = data;
-                    })
-                    .error(function(err) {
-                        ionicPopup.alert({
-                            title: 'error',
-                            template: err
-                        });
+                        if (data.num == 0)
+                            return userService.getCaptcha(mobile);
+                        else
+                            return $q.reject('exist');
+                    }).then(function(data) {}).catch(function(err) {
+                        alert(err);
                     });
             };
         }

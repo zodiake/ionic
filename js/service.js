@@ -5,7 +5,7 @@ angular.module('starter.service', [])
                 $window.localStorage[key] = value;
             },
             get: function(key, defaultValue) {
-                return $window.localStorage[key] || defaultValue;
+                return JSON.parse($window.localStorage[key] || defaultValue);
             },
             delete: function(key) {
                 return $window.localStorage.removeItem(key);
@@ -90,7 +90,13 @@ angular.module('starter.service', [])
             return $http.get(ajaxConfig.url + '/user/captcha', {
                 mobile: mobile
             });
+        };
+        this.countByName = function(name) {
+            return $http.get(ajaxConfig.url + '/user/_count', {
+                name: name
+            });
         }
+
     }])
     .service('AddressService', ['$http', 'ajaxConfig', function($http, ajaxConfig) {
         this.findAll = function(userId) {
@@ -103,5 +109,9 @@ angular.module('starter.service', [])
         };
         this.findAllProvinces = function() {
             return $http.get(ajaxConfig.url + '/address/province');
+        }
+    }]).service('OrderService', ['$http', 'ajaxConfig', '$localstorage', function($http, ajaxConfig, $localstorage) {
+        this.findAll = function() {
+            return $http.get(ajaxConfig.url + '/orders');
         }
     }]);

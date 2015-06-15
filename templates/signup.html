@@ -3,21 +3,22 @@
         <form name='signupForm' class="list" ng-submit="signup(signupForm)" novalidate>
             <label class="item item-input">
                 <span class="input-label">Username</span>
-                <input type="text" name='mobile' ng-model="user.mobile" ng-required='true' />
+                <input type="text" name='mobile' ng-model="user.mobile" required='true' ng-minlength=11 />
             </label>
-            <span ng-show="signupForm.name.$error.required">pleas enter name</span>
+            <span ng-show="signupForm.mobile.$error.required">pleas enter name</span>
             <label class="item item-input">
                 <span class="input-label">Password</span>
-                <input type="password" name='password' ng-model="user.password" ng-required='true' />
+                <input type="password" name='password' ng-model="user.password" required='true' />
             </label>
             <span ng-show="signupForm.password.$error.required">pleas enter password</span>
             <label class="item item-input">
                 <span class="input-label">captcha</span>
-                <input type="text" name='captcha' ng-required='true' />
+                <input type="text" name='captcha' required='true' ng-minlength=4 ng-model="user.captcha" />
             </label>
-            <input type='button' class='button' ng-click="getCaptcha(user.mobile)" value="click" />
+            <span ng-show="signupForm.captcha.$valid">pleas enter captcha</span>
+            <input type='button' class='button' ng-disabled="signupForm.mobile.$invalid" ng-click="getCaptcha(user.mobile)" value="click" />
             <span ng-show="signupForm.captcha.$error.required">pleas enter captcha</span>
-            <button class="button button-full button-positive">signup
+            <button class="button button-full button-positive" ng-disabled="signupForm.$invalid">signup
             </button>
         </form>
     </ion-content>

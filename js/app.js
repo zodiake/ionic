@@ -98,22 +98,6 @@ angular.module('starter').config(['$ionicConfigProvider',
                         controller: 'ProductDetailController'
                     }
                 }
-            }).state('tabs.order', {
-                url: '/orders',
-                views: {
-                    'order-tab': {
-                        templateUrl: 'templates/orders.html',
-                        controller: 'OrderController'
-                    }
-                }
-            }).state('tabs.orderDetail', {
-                url: '/orders/:id',
-                views: {
-                    'order-tab': {
-                        templateUrl: 'templates/orderDetail.html',
-                        controller: 'OrderDetailController'
-                    }
-                }
             }).state('tabs.cart', {
                 url: '/cart',
                 views: {
@@ -145,6 +129,14 @@ angular.module('starter').config(['$ionicConfigProvider',
                         templateUrl: 'templates/orders.html',
                         controller: 'OrderController',
                         resolve: loginResolve
+                    }
+                }
+            }).state('tabs.orderDetail', {
+                url: '/orders/:id',
+                views: {
+                    'mine-tab': {
+                        templateUrl: 'templates/orderDetail.html',
+                        controller: 'OrderDetailController'
                     }
                 }
             }).state('tabs.address', {

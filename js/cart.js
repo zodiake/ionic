@@ -8,7 +8,7 @@ angular.module('Cart', ['starter.service'])
         function($scope, $localstorage, $state) {
             $scope.$on('$ionicView.beforeEnter',
                 function() {
-                    $scope.carts = JSON.parse($localstorage.get('carts'));
+                    $scope.carts = $localstorage.get('carts');
                 }
             );
             $scope.checkout = function() {

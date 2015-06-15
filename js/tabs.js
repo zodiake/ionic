@@ -12,6 +12,7 @@ angular.module('Tabs', [])
                 case 'tabs.signup':
                 case 'tabs.address':
                 case 'tabs.addressDetail':
+                case 'tabs.orders':
                     $rootScope.hideTabs = true;
             }
         });
