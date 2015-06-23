@@ -3,9 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter.controller', ['Category', 'Cart', 'Product', 'Tabs', 'mine.Controller', 'Checkout']);
+angular.module('starter.controller', ['Stop', 'Map', 'Category', 'Cart', 'Product', 'Tabs', 'mine.Controller', 'Checkout']);
 
-angular.module('starter', ['ionic', 'starter.controller', 'starter.service', 'ngCordova', 'angular-jwt'])
+angular.module('starter', ['baiduMap', 'ionic', 'starter.controller', 'starter.service', 'ngCordova', 'angular-jwt'])
     .run(['$ionicPlatform',
         '$rootScope',
         '$state',
@@ -98,6 +98,14 @@ angular.module('starter').config(['$ionicConfigProvider',
                         controller: 'ProductDetailController'
                     }
                 }
+            }).state('tabs.stops', {
+                url: '/stops',
+                views: {
+                    'stops-tab': {
+                        templateUrl: 'templates/stops.html',
+                        controller: 'StopsController'
+                    }
+                }
             }).state('tabs.cart', {
                 url: '/cart',
                 views: {
@@ -174,6 +182,10 @@ angular.module('starter').config(['$ionicConfigProvider',
                 url: '/signup',
                 templateUrl: 'templates/signup.html',
                 controller: 'SignupController'
+            }).state('map', {
+                url: '/map',
+                templateUrl: 'templates/maps.html',
+                controller: 'MapController'
             });
     }
 ]);

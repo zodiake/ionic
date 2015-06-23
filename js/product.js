@@ -36,7 +36,6 @@ angular.module('Product', ['starter.service'])
                             $scope.hasMore = true;
                             $scope.page += 1;
                             $localstorage.concat('products', data);
-                            $scope.$broadcast('scroll.infiniteScrollComplete');
                         }
                     })
                     .error(function() {
@@ -46,6 +45,8 @@ angular.module('Product', ['starter.service'])
                         }
                         $scope.hasMore = false;
                         netWorkError();
+                    }).finally(function() {
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
                     });
             };
 
@@ -61,13 +62,14 @@ angular.module('Product', ['starter.service'])
                         } else {
                             $scope.products = data;
                             $scope.hasMore = true;
-                            $scope.$broadcast('scroll.refreshComplete');
                             $localstorage.setObject('products', data);
                         }
                     })
                     .error(function() {
                         netWorkError();
                         $scope.producs = $localstorage.get('products');
+                        $scope.$broadcast('scroll.refreshComplete');
+                    }).finally(function() {
                         $scope.$broadcast('scroll.refreshComplete');
                     });
             }

@@ -1,0 +1,10 @@
+<ion-view view-title='stops'>
+    <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
+        <ion-list>
+        </ion-list>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>
